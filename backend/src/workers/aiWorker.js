@@ -13,23 +13,23 @@ export const startAIWorker = () => {
   const worker = new Worker(
     "ai-processing",
     async (job) => {
-      console.log("🔥 JOB RECEIVED:", job.data);
+      console.log("JOB RECEIVED:", job.data);
 
       const { fileId, fileCategory, localPath, fileMimeType } = job.data;
 
       try {
-        // 🔄 Set processing
+        // Set processing
         await File.findByIdAndUpdate(fileId, { aiStatus: "processing" });
 
         let updateData = {};
 
         // =========================
-        // 🖼️ IMAGE AI
+        // IMAGE AI
         // =========================
         if (fileCategory === "image") {
           const result = await analyzeImage(localPath);
 
-          console.log("🧠 IMAGE AI RESULT:", result);
+          console.log("IMAGE AI RESULT:", result);
 
           updateData = {
             aiSummary: result.summary || "Image uploaded",
@@ -38,7 +38,7 @@ export const startAIWorker = () => {
         } else if (fileCategory === "audio") {
           const result = await transcribeAudio(localPath);
 
-          console.log("🧠 AUDIO AI RESULT:", result);
+          console.log("AUDIO AI RESULT:", result);
 
           updateData = {
             aiSummary: result.summary,
@@ -48,10 +48,10 @@ export const startAIWorker = () => {
         }
 
         // =========================
-        // 📄 DOCUMENT AI (PDF / DOCX / TXT)
+        // DOCUMENT AI (PDF / DOCX / TXT)
         // =========================
         else {
-          console.log("📄 Extracting text...");
+          console.log("Extracting text...");
 
           const extractedText = await extractText(
             localPath,
@@ -59,10 +59,10 @@ export const startAIWorker = () => {
             fileMimeType
           );
 
-          console.log("📄 Extracted length:", extractedText.length);
+          console.log("Extracted length:", extractedText.length);
 
           if (!extractedText || extractedText.trim().length === 0) {
-            console.log("⚠️ No text found in document");
+            console.log("No text found in document");
 
             updateData = {
               aiSummary: "No readable text found",
@@ -71,7 +71,7 @@ export const startAIWorker = () => {
           } else {
             const result = await analyzeText(extractedText);
 
-            console.log("🧠 TEXT AI RESULT:", result);
+            console.log("TEXT AI RESULT:", result);
 
             updateData = {
               aiSummary: result.summary || "",
@@ -81,7 +81,7 @@ export const startAIWorker = () => {
         }
 
         // =========================
-        // 💾 SAVE TO DB
+        // SAVE TO DB
         // =========================
         await File.findByIdAndUpdate(
           fileId,
@@ -93,16 +93,17 @@ export const startAIWorker = () => {
         );
 
         // =========================
-        // 🗑️ DELETE TEMP FILE
+        // DELETE TEMP FILE
         // =========================
         if (localPath && fs.existsSync(localPath)) {
           fs.unlinkSync(localPath);
-          console.log("🗑️ Temp file deleted");
+          console.log("Temp file deleted");
         }
 
-        console.log("✅ AI done:", fileId);
+        console.log("AI done:", fileId);
+        
       } catch (err) {
-        console.error("❌ AI failed:", err);
+        console.error("AI failed:", err);
 
         await File.findByIdAndUpdate(fileId, {
           aiStatus: "failed",
@@ -114,5 +115,5 @@ export const startAIWorker = () => {
     }
   );
 
-  console.log("🚀 AI Worker Started");
+  console.log("AI Worker Started....");
 };

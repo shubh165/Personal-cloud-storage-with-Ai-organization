@@ -21,7 +21,7 @@ function Navbar({ setFiles }) {
       });
 
       // setFiles(res.data.data); // update file list
-      setFiles(res.data.results); 
+      setFiles(res.data.results);
     } catch (error) {
       console.error("Search error:", error.message);
     }

@@ -37,19 +37,19 @@ const uploadFile = asyncHandler(async (req, res) => {
   const file = await File.create({
     owner: req.user._id,
     fileName: req.file.originalname,
-    fileCategory: category, // ✅ FIXED
+    fileCategory: category, 
     fileUrl: uploadedFile.secure_url,
     cloudinaryPublicId: uploadedFile.public_id,
     cloudinaryResourceType: uploadedFile.resource_type,
     fileSize: uploadedFile.bytes,
     mimeType: mime,
-    originalName: req.file.originalname, // ✅ ADDED ORIGINAL NAME
+    originalName: req.file.originalname, // ADDED ORIGINAL NAME
   });
 
   await aiQueue.add("process-file", {
     fileId: file._id,
     fileCategory: file.fileCategory,
-    fileMimeType: file.mimeType, // 🔥 THIS LINE
+    fileMimeType: file.mimeType, 
     localPath: path.resolve(fileLocalPath),
   });
 
@@ -131,7 +131,7 @@ const deleteFile = async (req, res) => {
       return res.status(404).json({ message: "File not found" });
     }
 
-    // 🔐 Owner check
+    // Owner check
     if (file.owner.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Unauthorized" });
     }
@@ -286,7 +286,7 @@ const emptyTrash = asyncHandler(async (req, res) => {
       owner: req.user._id,
       isTrashed: { $ne: true },
       $or: [
-        { originalName: { $regex: query, $options: "i" } }, // 🔥 NEW
+        { originalName: { $regex: query, $options: "i" } }, 
         { aiTags: { $regex: query, $options: "i" } },
         { aiSummary: { $regex: query, $options: "i" } },
       ],
@@ -320,7 +320,7 @@ const getSingleFile = async (req, res) => {
       });
     }
 
-    // 🔐 SECURITY (VERY IMPORTANT)
+    // SECURITY (VERY IMPORTANT)
     res.status(200).json({
       success: true,
       data: file,
@@ -370,6 +370,10 @@ const downloadFile = asyncHandler(async (req, res) => {
   upstream.data.on("error", (error) => res.destroy(error));
   upstream.data.pipe(res);
 });
+
+// ======================================
+// get favorite Files
+// ======================================
 
 const getFavoriteFiles = asyncHandler(async (req, res) => {
   const files = await File.find({
