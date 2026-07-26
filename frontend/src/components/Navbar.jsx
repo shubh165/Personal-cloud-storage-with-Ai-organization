@@ -65,7 +65,8 @@ function Navbar({ setFiles }) {
   };
 
   return (
-    <div className="bg-white border-b p-4 flex justify-between items-center">
+    // <div className="bg-white border-b p-4 flex justify-between items-center">
+    <div className="bg-white relative z-[9999] border-b p-4 flex justify-between items-center">
       {/* 🔍 SEARCH */}
       <div className="relative">
         <input
@@ -89,7 +90,8 @@ function Navbar({ setFiles }) {
         />
 
         {open && (
-          <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40">
+          // <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40">
+          <div className="absolute z-[9999] right-0 top-12 bg-white shadow-lg rounded-lg w-40">
             <button
               onClick={() => navigate("/profile")}
               className="block w-full text-left px-4 py-2 hover:bg-gray-100"

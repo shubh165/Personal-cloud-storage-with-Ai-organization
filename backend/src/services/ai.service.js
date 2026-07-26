@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
+
 import { GoogleGenAI } from "@google/genai";
 import fs from "fs";
 import path from "path";
 
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY || "AIzaSyD8wI_f8VenHe7UJZWtbLWxv_8mSAoY_ro",
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 const cleanJSON = (text) => {
@@ -38,7 +41,7 @@ export const analyzeImage = async (imagePath) => {
     if (ext === ".webp") mimeType = "image/webp";
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview", // 🔥 YOUR MODEL
+      model: "gemini-3-flash-preview", //  YOUR MODEL
       contents: [
         {
           inlineData: {
@@ -69,7 +72,7 @@ Return ONLY JSON:
 
     const text = response.text;
 
-    console.log("🧠 RAW:", text);
+    console.log("RAW:", text);
 
     // simple parsing
     const parsed = cleanJSON(text);

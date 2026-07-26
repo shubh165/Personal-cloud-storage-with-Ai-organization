@@ -4,13 +4,13 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 
-// ✅ NEW VERSION IMPORT
+// NEW VERSION IMPORT
 const { PDFParse } = require("pdf-parse");
 
 export const extractText = async (filePath, fileCategory, mimeType) => {
   try {
     // =========================
-    // 📄 PDF (NEW API)
+    // PDF (NEW API)
     // =========================
     if (mimeType === "application/pdf") {
       const buffer = fs.readFileSync(filePath);
@@ -23,7 +23,7 @@ export const extractText = async (filePath, fileCategory, mimeType) => {
     }
 
     // =========================
-    // 📄 DOCX
+    // DOCX
     // =========================
     if (
       mimeType ===
@@ -34,7 +34,7 @@ export const extractText = async (filePath, fileCategory, mimeType) => {
     }
 
     // =========================
-    // 📄 TXT
+    // TXT
     // =========================
     return fs.readFileSync(filePath, "utf-8");
   } catch (error) {
