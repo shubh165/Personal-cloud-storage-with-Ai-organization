@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "./api/axios";
 
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
@@ -19,9 +19,7 @@ function App() {
   // 🔐 Check authentication from backend
   const checkAuth = async () => {
     try {
-      await axios.get("http://localhost:5000/api/v1/users/me", {
-        withCredentials: true,
-      });
+      await api.get("/users/me");
       setIsAuth(true);
     } catch (err) {
       setIsAuth(false);

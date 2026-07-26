@@ -11,7 +11,15 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "Unauthorized: No token provided");
   }
 
-  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  let decodedToken;
+
+  try {
+    decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  } catch (error) {
+    // TokenExpiredError must be a 401 so the frontend interceptor can use the
+    // valid refresh-token cookie to obtain a new access token and retry once.
+    throw new ApiError(401, "Unauthorized: Access token expired or invalid");
+  }
 
   const user = await User.findById(decodedToken._id).select(
     "-password -refreshToken"

@@ -173,37 +173,35 @@ Refresh Token
 
 const refreshToken = asyncHandler(async (req, res) => {
   const refreshTokenFromCookie =
-    req.cookies?.refreshToken || req.body?.refreshToken;
-
+  req.cookies?.refreshToken || req.body?.refreshToken;
+  
   if (!refreshTokenFromCookie) {
     throw new ApiError(401, "Refresh token is required");
   }
-
+  
   try {
     const decodedToken = jwt.verify(
       refreshTokenFromCookie,
       process.env.REFRESH_TOKEN_SECRET
     );
-
+    
     const user = await User.findById(decodedToken?._id);
-
+    
     if (!user) {
       throw new ApiError(404, "User not found");
     }
-
+    
     if (user.refreshToken !== refreshTokenFromCookie) {
       throw new ApiError(401, "Invalid refresh token");
     }
-
-    const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-      user._id
-    );
-
+    
+    const accessToken = user.generateAccessToken();
+    
     const options = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     };
-
+    
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
@@ -211,14 +209,61 @@ const refreshToken = asyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           200,
-          { accessToken, refreshToken },
           "Access token refreshed successfully"
         )
       );
-  } catch (error) {
-    throw new ApiError(401, "Invalid refresh token");
-  }
+    } catch (error) {
+      throw new ApiError(401, "Invalid refresh token");
+    }
 });
+  
+  // const refreshToken = asyncHandler(async (req, res) => {
+  //   const refreshTokenFromCookie =
+  //     req.cookies?.refreshToken || req.body?.refreshToken;
+  
+  //   if (!refreshTokenFromCookie) {
+  //     throw new ApiError(401, "Refresh token is required");
+  //   }
+  
+  //   try {
+  //     const decodedToken = jwt.verify(
+  //       refreshTokenFromCookie,
+  //       process.env.REFRESH_TOKEN_SECRET
+  //     );
+  
+  //     const user = await User.findById(decodedToken?._id);
+  
+  //     if (!user) {
+  //       throw new ApiError(404, "User not found");
+  //     }
+  
+  //     if (user.refreshToken !== refreshTokenFromCookie) {
+  //       throw new ApiError(401, "Invalid refresh token");
+  //     }
+  
+  //     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+  //       user._id
+  //     );
+  
+  //     const options = {
+  //       httpOnly: true,
+  //       secure: process.env.NODE_ENV === "production",
+  //     };
+  
+  //     return res
+  //       .status(200)
+  //       .cookie("accessToken", accessToken, options)
+  //       .cookie("refreshToken", refreshToken, options)
+  //       .json(
+  //         new ApiResponse(
+  //           200,
+  //           "Access token refreshed successfully"
+  //         )
+  //       );
+  //   } catch (error) {
+  //     throw new ApiError(401, "Invalid refresh token");
+  //   }
+  // });
 
 /* ======================================
 Change Password
