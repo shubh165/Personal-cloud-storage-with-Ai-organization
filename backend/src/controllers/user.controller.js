@@ -50,11 +50,8 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(409, "User with email or username already exists");
   }
-  // console.log("HEllo1");
+  
   const avtarLocalPath = req.files?.avtar?.[0]?.path;
-
-  // console.log("avtarLocalPath", avtarLocalPath);
-  // console.log("HEllo2");
 
   let avtar = null;
   if (avtarLocalPath != undefined) {
