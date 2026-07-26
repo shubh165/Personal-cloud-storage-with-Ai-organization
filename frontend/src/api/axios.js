@@ -12,11 +12,16 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const isRefreshRequest = originalRequest?.url?.includes("/users/refresh-token");
+    
+    const isPublicAuthRequest =
+      originalRequest?.url?.includes("/users/login") ||
+      originalRequest?.url?.includes("/users/register");
 
     if (
       error.response?.status !== 401 ||
       originalRequest?._retry ||
-      isRefreshRequest
+      isRefreshRequest ||
+      isPublicAuthRequest
     ) {
       return Promise.reject(error);
     }
@@ -36,6 +41,11 @@ api.interceptors.response.use(
       await refreshPromise;
       return api(originalRequest);
     } catch (refreshError) {
+      // A missing, invalid, or expired refresh token means the session is over.
+      // App state is not available in this Axios module, so redirect directly.
+      if (window.location.pathname !== "/login") {
+        window.location.replace("/login");
+      }
       return Promise.reject(refreshError);
     }
   },
