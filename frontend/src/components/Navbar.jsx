@@ -10,7 +10,7 @@ function Navbar({ setFiles }) {
   const navigate = useNavigate();
 
   // =========================
-  // 🔍 SEARCH FUNCTION
+  // SEARCH FUNCTION
   // =========================
   const handleSearch = async (value) => {
     try {
@@ -20,14 +20,13 @@ function Navbar({ setFiles }) {
         withCredentials: true,
       });
 
-      // setFiles(res.data.data); // update file list
       setFiles(res.data.results);
     } catch (error) {
       console.error("Search error:", error.message);
     }
   };
 
-  // 🔁 Debounce search
+  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       handleSearch(query);
@@ -37,7 +36,7 @@ function Navbar({ setFiles }) {
   }, [query]);
 
   // =========================
-  // 👤 GET LOGGED-IN USER
+  // GET LOGGED-IN USER
   // =========================
   const fetchUser = async () => {
     try {
@@ -56,7 +55,7 @@ function Navbar({ setFiles }) {
   }, []);
 
   // =========================
-  // 🚪 LOGOUT
+  // LOGOUT
   // =========================
   const handleLogout = async () => {
     await api.post("/users/logout");
@@ -65,9 +64,8 @@ function Navbar({ setFiles }) {
   };
 
   return (
-    // <div className="bg-white border-b p-4 flex justify-between items-center">
     <div className="bg-white relative z-[9999] border-b p-4 flex justify-between items-center">
-      {/* 🔍 SEARCH */}
+      {/* SEARCH */}
       <div className="relative">
         <input
           type="text"
@@ -79,7 +77,7 @@ function Navbar({ setFiles }) {
         <span className="absolute left-3 top-2 text-gray-400">🔍</span>
       </div>
 
-      {/* 👤 USER SECTION */}
+      {/* USER SECTION */}
       <div className="relative flex items-center gap-4">
         <span className="font-medium">{user?.fullName || "User"}</span>
 
@@ -90,7 +88,6 @@ function Navbar({ setFiles }) {
         />
 
         {open && (
-          // <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40">
           <div className="absolute z-[9999] right-0 top-12 bg-white shadow-lg rounded-lg w-40">
             <button
               onClick={() => navigate("/profile")}

@@ -23,7 +23,6 @@ function Profile() {
       fullName,
       email,
     });
-    // console.log("Update profile response:", response.data); // Debug log to check response
     alert(response.data.message);
   };
 
@@ -42,14 +41,14 @@ function Profile() {
         newPassword,
       });
 
-      // ✅ Success message
+      // Success message
       alert(response.data.message);
     } catch (error) {
-      // ✅ Show backend error message
+      // Show backend error message
       const message = error.response?.data?.message;
 
       if (message) {
-        alert(message); // 🔥 This will show: "New password must be different"
+        alert(message); // This will show: "New password must be different"
       }
     }
   };

@@ -113,7 +113,7 @@ function FileCard({ file, isTrashView = false }) {
       </button>
       )}
 
-      {/* 🔥 3 DOT MENU */}
+      {/* 3 DOT MENU */}
       <div className="absolute top-3 right-3">
         <button
           onClick={(e) => {
@@ -178,7 +178,7 @@ function FileCard({ file, isTrashView = false }) {
         {getFileIcon()}
       </div>
 
-      {/* 🔥 FILE NAME / RENAME */}
+      {/*  FILE NAME / RENAME */}
       {renameMode ? (
         <input
           value={newName}

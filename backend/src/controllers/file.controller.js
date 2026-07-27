@@ -148,8 +148,7 @@ const deleteFile = async (req, res) => {
     let publicId = file.cloudinaryPublicId;
     let legacyPublicId = "";
 
-    // Records created before public_id storage can usually be recovered from a
-    // standard Cloudinary delivery URL, e.g. /upload/v123/folder/file.pdf.
+
     if (!publicId && file.fileUrl) {
       const uploadPath = new URL(file.fileUrl).pathname.split("/upload/")[1];
       if (uploadPath) {
@@ -320,7 +319,6 @@ const getSingleFile = async (req, res) => {
       });
     }
 
-    // SECURITY (VERY IMPORTANT)
     res.status(200).json({
       success: true,
       data: file,

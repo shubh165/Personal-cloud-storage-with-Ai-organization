@@ -15,10 +15,10 @@ function Sidebar() {
     }
   };
 
-  // 🔥 ACTIVE CHECK
+  // ACTIVE CHECK
   const isActive = (path) => location.pathname === path;
 
-  // 🔥 STYLES
+  // STYLES
   const active =
     "font-semibold text-purple-600 border-l-4 border-purple-600 pl-2";
   const normal = "text-gray-600 hover:text-purple-600";

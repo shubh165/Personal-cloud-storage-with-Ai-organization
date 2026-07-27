@@ -76,7 +76,7 @@ function FileDetails() {
 
   return (
     <MainLayout>
-      {/* 🔥 HEADER */}
+      {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         {/* LEFT */}
         <div className="flex items-center gap-3">
@@ -130,9 +130,9 @@ function FileDetails() {
         </div>
       </div>
 
-      {/* 🔥 CONTENT */}
+      {/* CONTENT */}
       <div className="grid grid-cols-3 gap-6 items-start">
-        {/* 🔥 PREVIEW */}
+        {/* PREVIEW */}
         <div className="col-span-2 bg-white rounded-2xl p-6 shadow flex items-center justify-center min-h-[500px]">
           {/* IMAGE */}
           {file.mimeType?.startsWith("image") && (
@@ -188,7 +188,7 @@ function FileDetails() {
             )}
         </div>
 
-        {/* 🔥 RIGHT PANEL */}
+        {/*  RIGHT PANEL */}
         <div className="bg-white rounded-xl p-6 shadow space-y-6">
           <h2 className="font-semibold text-lg">AI Insights</h2>
 
@@ -220,7 +220,7 @@ function FileDetails() {
             </p>
           </div>
 
-          {/* 🎤 TRANSCRIPT (NEW) */}
+          {/*  TRANSCRIPT (NEW) */}
           {file.aiTranscript && (
             <div>
               <p className="text-sm text-gray-500 mb-2">Transcript</p>

@@ -147,7 +147,7 @@ export const transcribeAudio = async (audioPath) => {
       contents: [
         {
           inlineData: {
-            mimeType: "audio/mpeg", // 🔥 important
+            mimeType: "audio/mpeg", 
             data: base64Audio,
           },
         },

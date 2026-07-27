@@ -42,7 +42,7 @@ function MyFiles() {
     fetchFiles();
   }, []);
 
-  // 🔥 FILTER LOGIC
+  //  FILTER LOGIC
   const filteredFiles = files.filter((file) => {
     const type = file.mimeType || "";
 
@@ -76,7 +76,7 @@ function MyFiles() {
         <div className="flex-1 overflow-y-auto p-8">
           <h1 className="text-2xl font-bold mb-6">My Files</h1>
 
-          {/* 🔥 FILTER BUTTONS */}
+          {/* FILTER BUTTONS */}
           <div className="flex gap-3 mb-6 flex-wrap">
             {filters.map((item) => (
               <button
@@ -97,31 +97,6 @@ function MyFiles() {
               </button>
             ))}
           </div>
-          {/* <div className="flex gap-3 mb-6 flex-wrap">
-            {[
-              { key: "all", label: "All" },
-              { key: "image", label: "Images" },
-              { key: "document", label: "Docs" },
-              { key: "video", label: "Videos" },
-              { key: "audio", label: "Audio" },
-            ].map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setFilter(item.key)}
-                className={`px-4 py-2 rounded-full text-sm flex items-center gap-2 border transition
-        ${
-          filter === item.key
-            ? "bg-purple-600 text-white border-purple-600"
-            : "bg-white text-gray-600 hover:bg-purple-100"
-        }`}
-              >
-                {item.label}
-                <span className="text-xs bg-black/10 px-2 py-0.5 rounded-full">
-                  {counts[item.key]}
-                </span>
-              </button>
-            ))}
-          </div> */}
 
           {/* FILES */}
           <div className="grid grid-cols-3 gap-6">

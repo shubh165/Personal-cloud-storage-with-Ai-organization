@@ -267,7 +267,6 @@ Change Password
 ====================================== */
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-  // console.log("Change password request body:", req.body); // Debug log to check incoming data
   const { currentPassword, newPassword } = req.body;
 
   if (!currentPassword || !newPassword) {
