@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import fs from "fs";
 
 /* ======================================
 Generate Access + Refresh Tokens
@@ -61,6 +62,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
   }
 
+  
   const user = await User.create({
     fullName,
     email,
@@ -68,10 +70,15 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
     avtar: avtar?.secure_url || "",
   });
-
+  
   const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
+
+  if (avtarLocalPath && fs.existsSync(avtarLocalPath)) {
+    fs.unlinkSync(avtarLocalPath);
+    console.log("Avatar file deleted from temp folder after upload to Cloudinary");
+  }
 
   return res
     .status(201)
