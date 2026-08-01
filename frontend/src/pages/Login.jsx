@@ -88,7 +88,7 @@ function Login() {
           <div className="flex items-center mb-6">
             <input type="checkbox" className="mr-2" />
 
-            <span className="text-sm">Remember me for 30 days</span>
+            <span className="text-sm">Remember me for 7 days</span>
           </div>
 
           {/* BUTTON */}

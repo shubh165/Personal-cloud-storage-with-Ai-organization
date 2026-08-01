@@ -17,8 +17,7 @@ connectDB()
   .then(() => {
   startAIWorker();
   app.listen(process.env.PORT, () => {
-    console.log(`Server is running on http://localhost:${process.env.PORT}`);
-  });
+    console.log(`Server is running on port ${process.env.PORT}`);  });
 })
 .catch((error) => {
   console.error('1.Error connecting to MongoDB:',error);

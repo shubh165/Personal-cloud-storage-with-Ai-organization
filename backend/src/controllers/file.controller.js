@@ -46,12 +46,16 @@ const uploadFile = asyncHandler(async (req, res) => {
     originalName: req.file.originalname, // ADDED ORIGINAL NAME
   });
 
+  console.log("File uploaded and saved to database:", file);
+  
   await aiQueue.add("process-file", {
     fileId: file._id,
     fileCategory: file.fileCategory,
     fileMimeType: file.mimeType, 
     localPath: path.resolve(fileLocalPath),
   });
+
+  console.log("File uploaded queue:", file);
 
   return res
     .status(201)

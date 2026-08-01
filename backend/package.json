@@ -7,8 +7,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
-  },
+  "dev": "nodemon src/index.js",
+  "start": "node src/index.js"
+},
   "devDependencies": {
     "nodemon": "^3.1.14",
     "prettier": "^3.8.1"
@@ -25,7 +26,6 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "form-data": "^4.0.5",
-    "groq-sdk": "^1.1.2",
     "ioredis": "^5.10.1",
     "jsonwebtoken": "^9.0.3",
     "mammoth": "^1.12.0",
