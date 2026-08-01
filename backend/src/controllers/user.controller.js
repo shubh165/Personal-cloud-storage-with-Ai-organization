@@ -126,9 +126,14 @@ const loginUser = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
+  // const options = {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  // };
   const options = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
 
   return res
